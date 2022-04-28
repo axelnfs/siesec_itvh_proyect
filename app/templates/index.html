@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{%block content %}
+    
+    {% from "_macro.html" import render_field %}
+
+    <form action="">
+        {{ render_field(form.username)}}
+    </form>
+
+{% endblock %}

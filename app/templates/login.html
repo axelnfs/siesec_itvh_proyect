@@ -1,0 +1,21 @@
+<!-- <form action={{ url_for("login") }} method="post">
+    {{ form.csrf_token }}
+	{{form.username.label() }}{{form.username()}}<br/>
+	{{form.password.label() }}{{form.password()}}<br/>
+  		<br/>
+  		{{form.submit()}}
+</form> -->
+
+{% extends 'base.html' %}
+
+{%block content %}
+    
+    {% from "_macro.html" import render_field %}
+
+    <form action="">
+        {{ render_field(form.username) }}
+		{{ render_field(form.password) }}
+		{{ render_field(form.submit) }}
+    </form>
+
+{% endblock %}

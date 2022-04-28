@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% from "_macro.html" import render_field %}
+
+    <form action="">
+        {{ render_field(form.nickname) }}
+		{{ render_field(form.password) }}
+        {{ render_field(form.levelAdministration) }}
+		{{ render_field(form.submit) }}
+    </form>
+
+{% endblock%}
