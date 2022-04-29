@@ -1,57 +1,73 @@
-from flask import Flask, make_response, render_template, make_response, session, redirect, request, flash
+#flask
+from click import password_option
+from flask import Flask, make_response, render_template, make_response, session, redirect, request, flash, url_for
 from flask_wtf import FlaskForm
+#bootstrap
+from flask_bootstrap import Bootstrap
+#paquetes locales
 from app.forms import LoginForm
 from app.forms import RegisterForm
+#mysql
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host = "localhost",
+    user = "admin"
+    password = "Lexa1990."
+    database = 
+)
 
 app = Flask(__name__, template_folder='app/templates')
+bootstrap = Bootstrap(app)
 app.secret_key = "1234"
-# formLogin = LoginForm(request.form)
 
-@app.before_request
-def session_managment():
-    session.permanent = True
-
-@app.route('/')
-def hello():
+@app.route('/') 
+def hello(): #revisar
     response = make_response(redirect('/index'))
     return response
 
-@app.route('/register')
+@app.route('/index')
+def index():
+    nickname = session.get('nickname')
+    if nickname == None:
+        return render_template('failure.html')
+    else:
+        return render_template('index.html', nickname = nickname)
+
+@app.route('/register', methods=["GET", "POST"])
 def register():
     register_form = RegisterForm()
-    if register_form.validate_on_submit():
+    nickname = session.get('nickname')
+
+    context = {
+        'register_form': register_form,
+        'username': nickname
+    }
+
+    if register_form.validate_on_submit:
         nickname = register_form.nickname.data
         password = register_form.password.data
         levelAdministration = register_form.levelAdministration.data
-        flash('Registro exitoso')
-
-    return render_template('register.html', form = register_form)
+        session['nickname'] = nickname
+    return render_template('register.html', **context)
     
 @app.route('/login')
 def login():
     session.clear()
     login_form = LoginForm()
-    # session['user'] = 'pepe'
-    # session["auth"] = 1
-
-    # context = {
-    #     'login_form': login_form
-    # }
 
     return render_template('login.html', form = login_form)
 
-@app.route('/')
-def index():
-    try:
-        user = session["user"]
-        auth = session["auth"]
-    except:
-        user = "unknown"
-        auth = 0
+# @app.route('/')
+# def index():
+#     try:
+#         user = session["user"]
+#         auth = session["auth"]
+#     except:
+#         user = "unknown"
+#         auth = 0
     
 @app.route('/logout')
 def logout():
     session.clear()
-    session["user"] = "unknown"
-    session["auth"] = 0
-    return index()
+    return render_template('index.html')

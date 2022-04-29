@@ -1,4 +1,3 @@
-from tokenize import String
 from flask_wtf import FlaskForm
 from wtforms import Form
 from wtforms.fields import StringField, PasswordField, SubmitField
@@ -10,9 +9,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Enviar')
 
 class RegisterForm(FlaskForm):
-    nickname = StringField('Nombre de usuario')
-    password = StringField('Contraseña')
-    levelAdministration = StringField('Nivel de administracion')
+    nickname = StringField('Nombre de usuario', validators=[DataRequired()])
+    password = StringField('Contrasena', validators=[DataRequired()])
+    levelAdministration = StringField('Nivel de administracion', validators=[DataRequired()])
     submit = SubmitField('Enviar')
 
 

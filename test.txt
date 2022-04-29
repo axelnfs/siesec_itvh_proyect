@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- {% from "_macro.html" import render_field %} -->
+
+    <form action = "" method="post">
+        <!-- {{ render_field(form.nickname) }}
+		{{ render_field(form.password) }}
+        {{ render_field(form.levelAdministration) }}
+		{{ render_field(form.submit) }} -->
+        <label for="name">NOMBRE</label>
+        <input type="text" id="nickname" name="nickname"><br>
+        <label for="password">PASSWORD</label>
+        <input type="password" id="password" name="password"><br>
+        <label for="levelAdministration">Level Admin</label>
+        <input type="text" id="levelAdministration" name="levelAdministration"><br>
+        <input type="submit" name="submit" id="submit">
+    </form>
+
+{% endblock%}
+
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.nickname.label }}
+        {{ form.nickname }}
+    </div>
+    <div>
+        {{ form.password.label }}
+        {{ form.password }}
+    </div>
+    <div>
+        {{ form.levelAdministration.label }}
+        {{ form.levelAdministration }}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
