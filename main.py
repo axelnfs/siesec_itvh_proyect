@@ -15,6 +15,16 @@ app = Flask(__name__, template_folder='app/templates')
 bootstrap = Bootstrap(app)
 app.secret_key = "1234"
 
+def createUser(nickname, password, levelAdministration):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        sql = "INSERT INTO Usuarios(nickname, password, levelAdministration) VALUES (%s,%s,%s)"
+        cursor.execute(sql, (nickname, password, levelAdministration))
+    conexion.commit()
+    conexion.close()
+    session['nickname'] = nickname
+    return redirect(url_for('index'))
+    
 
 @app.route('/') 
 def hello(): #revisar
@@ -33,24 +43,23 @@ def register():
 
     register_form = RegisterForm()
     nickname = session.get('nickname')
-
+    session['nickname'] = nickname
     context = {
         'register_form': register_form,
-        'username': nickname
     }
 
     if register_form.validate_on_submit:
         nickname = register_form.nickname.data
         password = register_form.password.data
         levelAdministration = register_form.levelAdministration.data
-        session['nickname'] = nickname
+        if 'submit' in request.form:
+            createUser(nickname, password, levelAdministration)
     return render_template('register.html', **context)
     
 @app.route('/login')
 def login():
     session.clear()
     login_form = LoginForm()
-
     return render_template('login.html', form = login_form)
 
 @app.route('/teachers')
