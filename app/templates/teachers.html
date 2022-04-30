@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table>
+    <tr>
+        <td>id</td>
+        <td>Nombre</td>
+        <td>Fecha Nacimiento</td>
+        <td>Sexo</td>
+        <td>Genero</td>
+      </tr>
+    {% for x in teachers %} 
+    <tr>
+        <td>{{ x[0] }}</td>
+        <td>{{ x[1] }}</td>
+        <td>{{ x[2] }}</td>
+        <td>{{ x[3] }}</td>
+        <td>{{ x[4] }}</td>
+      </tr>
+    {% endfor %}
+</table>
+    
+{% endblock %}

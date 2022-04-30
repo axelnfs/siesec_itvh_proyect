@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {%block content %}
-<p>REGISTRO EXITOSO</p>
-<p>tu nombre es {{ nickname }}</p>
+    {% if session.get('nickname') %}
+        <a href="">Hola {{ nickname }}</a>
+        <a href="/logout">salir</a>
+    {% else %}
+        <a href="/login">Iniciar sesion</a>
+    {% endif %}
 {% endblock %}

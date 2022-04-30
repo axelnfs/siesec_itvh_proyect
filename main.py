@@ -1,4 +1,5 @@
 #flask
+from distutils.util import execute
 from click import password_option
 from flask import Flask, make_response, render_template, make_response, session, redirect, request, flash, url_for
 from flask_wtf import FlaskForm
@@ -8,18 +9,12 @@ from flask_bootstrap import Bootstrap
 from app.forms import LoginForm
 from app.forms import RegisterForm
 #mysql
-import mysql.connector
-
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "admin"
-    password = "Lexa1990."
-    database = 
-)
+from bd import obtener_conexion
 
 app = Flask(__name__, template_folder='app/templates')
 bootstrap = Bootstrap(app)
 app.secret_key = "1234"
+
 
 @app.route('/') 
 def hello(): #revisar
@@ -29,13 +24,13 @@ def hello(): #revisar
 @app.route('/index')
 def index():
     nickname = session.get('nickname')
-    if nickname == None:
-        return render_template('failure.html')
-    else:
-        return render_template('index.html', nickname = nickname)
+    return render_template('index.html', nickname = nickname)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
+    if session.get('nickname') == True:
+        return redirect('index.html')
+
     register_form = RegisterForm()
     nickname = session.get('nickname')
 
@@ -58,14 +53,16 @@ def login():
 
     return render_template('login.html', form = login_form)
 
-# @app.route('/')
-# def index():
-#     try:
-#         user = session["user"]
-#         auth = session["auth"]
-#     except:
-#         user = "unknown"
-#         auth = 0
+@app.route('/teachers')
+def teachers():
+    connection = obtener_conexion()
+    teachers = []
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Profesores")
+        teachers = cursor.fetchall()
+    connection.close()
+    return render_template('teachers.html',  teachers = teachers)
+
     
 @app.route('/logout')
 def logout():
