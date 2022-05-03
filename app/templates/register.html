@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf%}
 {% block content %}
-    {% if nickname %}
-        <h1>Bienvenido. {{ nickname }}</h1>
-    {% endif %}
     <div class="container">
         {{ wtf.quick_form(register_form) }}
     </div>

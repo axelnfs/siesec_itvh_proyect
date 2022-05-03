@@ -14,4 +14,9 @@ class RegisterForm(FlaskForm):
     levelAdministration = StringField('Nivel de administracion', validators=[DataRequired()])
     submit = SubmitField('Enviar')
 
+class CreateTheacherForm(FlaskForm):
+    nombre = StringField('Nombre de usuario', validators=[DataRequired()])
+    fechaNaci = StringField('Fecha Nacimiento', validators=[DataRequired()])
+    genero = StringField('Genero', validators=[DataRequired()])
+    Submit = SubmitField('Enviar')
 

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
+{if }
+{%block content %}
+    <div class="container">
+        {{ wtf.quick_form(createTeacher_form) }}
+        <p>Nota: La fecha debe ir en el formato AAAA-MM-DD</p>
+        <a href="/teachers">Volver</a>
+    </div>
+{% endblock %}

@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf%}
+{if }
 {%block content %}
+    {% if nickname == True %}
+        <meta http-equiv="refresh" content="url=http://127.0.0.1:5000/index">
+    {% endif%}
     <div class="container">
 	    {{ wtf.quick_form(login_form) }}
     </div>
