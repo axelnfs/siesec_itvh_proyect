@@ -24,6 +24,15 @@ def createUser(nickname, password, levelAdministration):
     session['nickname'] = nickname
     return redirect(url_for('index'))
 
+def createTeacher(nombre, fechaNaci, genero, vigencia):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        sql = "INSERT INTO Profesores(nombre, fechaNaci, genero, vigencia) VALUES (%s, %s, %s, %s)"
+        cursor.execute(sql, (nombre, fechaNaci, genero, vigencia))
+    conexion.commit()
+    conexion.close()
+    redirect(url_for('teachers'))
+
 def getUser(nickname, password):
     conexion = obtener_conexion()
     user = []
@@ -51,7 +60,12 @@ def hello(): #revisar
 @app.route('/index')
 def index():
     nickname = session.get('nickname')
-    return render_template('index.html', nickname = nickname)
+    showMoreMenu = False
+    if session.get('nickname') == 'kylo':
+        showMoreMenu = True
+        return render_template('index.html', nickname = nickname, showMoreMenu = showMoreMenu)
+    else:
+        return render_template('index.html', nickname = nickname, showMoreMenu = showMoreMenu)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
@@ -105,7 +119,7 @@ def teachers():
     else:
         return render_template('teachers.html',  teachers = teachers, **context)
 
-@app.route('/teachers/create')
+@app.route('/teachers/create', methods=["GET", "POST"])
 def createTeachers():
     createTeacher_form = CreateTheacherForm()
     nickname = session.get('nickname')
@@ -117,7 +131,22 @@ def createTeachers():
             nombre = createTeacher_form.nombre.data
             fechaNaci = createTeacher_form.fechaNaci.data
             genero = createTeacher_form.genero.data
+            if 'submit' in request.form:
+                createTeacher(nombre, fechaNaci, genero, vigencia=True)
         return render_template('teachersform.html', **context)
+    else:
+        return redirect('/index')
+
+@app.route('/students')
+def students():
+    if session.get('nickname') == 'kylo':
+        connection = obtener_conexion()
+        students = []
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM Alumnos")
+            students = cursor.fetchall()
+        connection.close()
+        return render_template('students.html', students = students)
     else:
         return redirect('/index')
 

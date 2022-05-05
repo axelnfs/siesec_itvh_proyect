@@ -15,8 +15,11 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Enviar')
 
 class CreateTheacherForm(FlaskForm):
-    nombre = StringField('Nombre de usuario', validators=[DataRequired()])
+    nombre = StringField('Nombre', validators=[DataRequired()])
     fechaNaci = StringField('Fecha Nacimiento', validators=[DataRequired()])
     genero = StringField('Genero', validators=[DataRequired()])
-    Submit = SubmitField('Enviar')
+    submit = SubmitField('Enviar')
+
+class CreateStudentForm(FlaskForm):
+    pass
 

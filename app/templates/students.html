@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table>
+    <tr>
+        <td>id</td>
+        <td>Nombre</td>
+        <td>Email</td>
+        <td>Fecha Nacimiento</td>
+        <td>Sexo</td>
+        <td>vigencia</td>
+      </tr>
+    {% for x in students %} 
+    <tr>
+        <td>{{ x[0] }}</td>
+        <td>{{ x[1] }}</td>
+        <td>{{ x[2] }}</td>
+        <td>{{ x[3] }}</td>
+        <td>{{ x[4] }}</td>
+        <td>{{ x[5] }}</td>
+      </tr>
+    {% endfor %}
+</table>
+<a href="/index">Volver</a>
+{% endblock %}

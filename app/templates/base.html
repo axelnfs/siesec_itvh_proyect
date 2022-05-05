@@ -15,8 +15,9 @@
             <li><a href="/index">Inicio</a></li>
             <li><a href="/teachers">Profesores</a></li>
             <li><a href="nosotros.html"></a>nosotros</li>
-            <li><a href=""></a>relleno2</li>
-            <li><a href=""></a>relleno3</li>
+            {% if showMoreMenu %}
+                <li><a href="/students">Estudiantes</a></li>
+            {% endif %}
         </ul>
     </nav>
     {% block content %}
