@@ -35,3 +35,28 @@
     <div>
         {{ form.submit() }}
     </div>
+
+
+
+
+
+    {% if {{ id }}} %}
+<table>
+    <tr>
+        <td>id</td>
+        <td>Nombre</td>
+        <td>Fecha Nacimiento</td>
+        <td>Sexo</td>
+        <td>Vigencia</td>
+      </tr>
+    {% for x in teacher %} 
+    <tr>
+        <td>{{ x[0] }}</td>
+        <td>{{ x[1] }}</td>
+        <td>{{ x[2] }}</td>
+        <td>{{ x[3] }}</td>
+        <td>{{ x[4] }}</td>
+      </tr>
+    {% endfor %}
+</table>
+{% endif %}

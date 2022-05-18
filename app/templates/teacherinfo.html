@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block content%}
 <table>
     <tr>
         <td>id</td>
@@ -9,7 +9,7 @@
         <td>Sexo</td>
         <td>Vigencia</td>
       </tr>
-    {% for x in teachers %} 
+    {% for x in teacher %} 
     <tr>
         <td>{{ x[0] }}</td>
         <td>{{ x[1] }}</td>
@@ -19,8 +19,4 @@
       </tr>
     {% endfor %}
 </table>
-
-{% if session.get('nickname') %}
-    <a href="/teachers/create">Crear nuevo</a>
-{% endif %}
 {% endblock %}

@@ -15,7 +15,7 @@
             <li><a href="/index">Inicio</a></li>
             <li><a href="/teachers">Profesores</a></li>
             <li><a href="nosotros.html"></a>nosotros</li>
-            {% if showMoreMenu %}
+            {% if session.get('nickname') %}
                 <li><a href="/students">Estudiantes</a></li>
             {% endif %}
         </ul>

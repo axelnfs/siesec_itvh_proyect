@@ -20,6 +20,10 @@ class CreateTheacherForm(FlaskForm):
     genero = StringField('Genero', validators=[DataRequired()])
     submit = SubmitField('Enviar')
 
+class SearchTeacherForm(FlaskForm):
+    id = StringField('ID')
+    submit = SubmitField('Buscar')
+
 class CreateStudentForm(FlaskForm):
     pass
 

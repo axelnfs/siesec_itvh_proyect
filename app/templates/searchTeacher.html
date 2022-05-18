@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
+{% block content %}
+<form action="/teachers/search" method="GET">
+    <label for="idProfesor">ID</label>
+    <input type="text" name="id"><br/>
+    <input type="submit" value="Buscar" />
+</form> 
+{% endblock%}

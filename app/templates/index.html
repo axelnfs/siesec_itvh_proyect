@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 {%block content %}
+    <div class="buttonUser">
     {% if session.get('nickname') %}
-        <a href="">Hola {{ nickname }}</a>
-        <a href="/logout">salir</a>
+        <div>
+            <a href="">Hola {{ nickname }}</a>
+            <a href="/logout">salir</a>
+        </div>
     {% else %}
-        <a href="/login">Iniciar sesion</a>
+        <div class="buttonLogin">
+            <a href="/login">Iniciar sesion</a>
+        </div>
     {% endif %}
+    </div>
 
 {% endblock %}
