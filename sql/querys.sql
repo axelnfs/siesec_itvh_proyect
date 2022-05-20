@@ -12,12 +12,35 @@ FROM ((UsuarioProfesor
 INNER JOIN Profesores ON UsuarioProfesor.id = Profesores.id)
 INNER JOIN Usuarios ON UsuarioProfesor.id = Usuarios.id)
 
+CREATE VIEW vw_clases AS
+SELECT Alumnos.nombre AS ALUMNO, Materias.nombre AS MATERIA, Grupos.letraGrupo AS GRUPO, 
+Grupos.gradoGrupo AS GRADO, Profesores.nombre AS PROFESOR, Clases.cicloEscolar AS CICLOESCOLAR
+FROM ((((Clases
+INNER JOIN Alumnos ON Clases.idAlumno = Alumnos.id)
+INNER JOIN Materias ON Clases.idMateria = Materias.id)
+INNER JOIN Grupos ON Clases.idGrupo = Grupos.id)
+INNER JOIN Profesores ON Clases.idProfesor = Profesores.id);
+
+SELECT Clases.id, Alumnos.nombre, Materias.nombre, Grupos.nombre, Profesores.nombre, Clases.cicloEscolar
+FROM Clases
+INNER JOIN Alumnos ON Clases.idAlumnos = Alumnos.id;
+
 CREATE PROCEDURE ObtenerUsuarioConContraseña(
   IN insertUsuario VARCHAR(40), IN insertPassword VARCHAR(40))
   BEGIN
   SELECT * FROM Usuarios
   WHERE nickname = insertUsuario AND password = insertPassword;
   END
+
+CREATE PROCEDURE ObtenerUsuarioProfesorConContraseña( /*REVISAR TEMA DE USUARIOS*/
+    IN insertUsuario VARCHAR(40), IN insertPassword VARCHAR(40))
+    BEGIN
+    SELECT UsuarioProfesor.id, Profesores.nombre, Usuarios.nickname, Usuarios.password 
+    FROM ((UsuarioProfesor
+    INNER JOIN Profesores ON UsuarioProfesor.id = Profesores.id)
+    INNER JOIN Usuarios ON UsuarioProfesor.id = Usuarios.id) 
+    WHERE Usuarios.nickname = insertUsuario AND Usuarios.password = insertPassword;
+    END
 
 CREATE TABLE UsuarioProfesor(
     id INT NOT NULL AUTO_INCREMENT,

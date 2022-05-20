@@ -3,14 +3,14 @@
 {% block content %}
 <table>
     <tr>
-        <td>id</td>
-        <td>Nombre</td>
-        <td>Email</td>
-        <td>Fecha Nacimiento</td>
-        <td>Sexo</td>
-        <td>vigencia</td>
+        <td>ALUMNOS</td>
+        <td>MATERIA</td>
+        <td>GRUPO</td>
+        <td>GRADO</td>
+        <td>PROFESOR</td>
+        <td>CICLOESCOLAR</td>
       </tr>
-    {% for x in students %} 
+    {% for x in classrooms %} 
     <tr>
         <td>{{ x[0] }}</td>
         <td>{{ x[1] }}</td>

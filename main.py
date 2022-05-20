@@ -1,5 +1,4 @@
 #flask
-from re import A
 from sqlite3 import connect
 from flask import Flask, make_response, render_template, make_response, session, redirect, request, flash, url_for
 from flask_wtf import FlaskForm
@@ -12,8 +11,13 @@ from app.forms import CreateTheacherForm
 # from app.forms import SearchTeacherForm
 #mysql
 from bd import obtener_conexion 
+#python
+from system import generateRecovery
 
-app = Flask(__name__, template_folder='app/templates')
+app = Flask(__name__, 
+template_folder='app/templates', 
+static_folder='app/static')
+
 bootstrap = Bootstrap(app)
 app.secret_key = "1234"
 
@@ -71,7 +75,7 @@ def register():
     return render_template('register.html', **context)
 
 @app.route('/login', methods=["GET","POST"])
-def login():
+def loginTeacher():
     login_form = LoginForm()
     context = {
         'login_form': login_form
@@ -81,13 +85,21 @@ def login():
         password = login_form.password.data
         user = []
         if 'submit' in request.form:
-            conexion = obtener_conexion()
+            conexion = obtener_conexion() #REVISAR USUARIOS PROCEDURE PROFESORES
             with conexion.cursor() as cursor:
                 sql = "CALL ObtenerUsuarioProfesorConContraseña('"+nickname+"', '"+password+"');"
                 cursor.execute(sql)
                 for x in cursor:
                     user = x[1]
             conexion.close()
+            nickname = user
+            if nickname == False:
+                return render_template('errorUsuario.html')
+            else:
+                session['nickname'] = nickname
+                nickname = session['nickname']
+                return render_template('index.html', nickname = nickname)
+    return render_template('login.html', **context)
 
 @app.route('/login/admin', methods=["GET", "POST"])
 def login():
@@ -134,7 +146,7 @@ def createTeachers():
     context = {
         'createTeacher_form': createTeacher_form,
     }
-    if session.get('nickname') == 'kylo':
+    if session.get('nickname') == 'kylo' & 'admin':
         if createTeacher_form.validate_on_submit:
             nombre = createTeacher_form.nombre.data
             fechaNaci = createTeacher_form.fechaNaci.data
@@ -152,62 +164,20 @@ def classrooms():
         connection = obtener_conexion()
         classrooms =  [] 
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM Alumnos")
+            cursor.execute("SELECT * FROM vw_clases;")
             classrooms = cursor.fetchall()
         connection.close()
-        return render_template('classrooms.html', students = students)
+        return render_template('classrooms.html', classrooms = classrooms)
     else:
         return redirect('/index')
 
-# @app.route('/teachers/search', methods=["GET"])
-# def searchTeacher():
-#     searchTeacher_form = SearchTeacherForm()
-#     context = {
-#         'searchTeacher_form': searchTeacher_form
-#     }
-#     if 'submit' in request.form:
-#         id = request.args.get('id')
-#         searchTeacher(id)
-#     return render_template('searchTeacher.html', **context)
-# # NOTA: ANDABA USANDO DOS FUNCIONES, UNA RECIBE Y OTRA ENVIA
-# # @app.route('/teachers/search/result')
-# def searchIdTeacher(id):
-#     teacher = []
-#     context = {
-#         'teacher': teacher
-#     }
-#     connection = obtener_conexion()
-#     with connection.cursor() as cursor:
-#         sql = "SELECT * FROM Profesores WHERE id = %s"
-#         cursor.execute(sql, (id))
-#         teacher = cursor.fetchall()
-#     connection.close()
-#     return redirect('teacherinfo.html', **context)
-#     # searchTeacher_form = SearchTeacherForm()
-#     # teacher = []
-#     # context = {
-#     #     'searchTeacher_form': searchTeacher_form,
-#     #     'teacher': teacher
-#     # }
-#     # if searchTeacher_form.validate_on_submit:
-#     #     id = searchTeacher_form.id.data
-#     #     connection = obtener_conexion()
-#     #     if 'sumbit' in request.form:
-#     #         with connection.cursor() as cursor:
-#     #             sql = "SELECT * FROM Profesores WHERE id = %s"
-#     #             cursor.execute(sql, (id))
-#     #             teacher = cursor.fetchall()
-#     #         connection.close()
-#     #         return render_template('searchTeacher.html', **context)
-#     # return render_template('searchTeacher.html', **context)
-
 @app.route('/students')
 def students():
-    if session.get('nickname') == 'kylo':
+    if session.get('nickname'):
         connection = obtener_conexion()
         students = []
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM Alumnos")
+            cursor.execute("SELECT * FROM Alumnos;")
             students = cursor.fetchall()
         connection.close()
         return render_template('students.html', students = students)
@@ -217,4 +187,5 @@ def students():
 @app.route('/logout')
 def logout():
     session.clear()
+    # generateRecovery()
     return render_template('index.html')
