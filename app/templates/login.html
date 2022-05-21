@@ -3,6 +3,12 @@
 {if }
 {%block content %}
     <div class="container">
-	    {{ wtf.quick_form(login_form) }}
+        <div class="container_card">
+            <div class="card_login">
+                <img src="https://virtual.salinacruz.tecnm.mx/pluginfile.php/1/theme_moove/marketing1icon/1645732385/tecnm%20circular.png" alt="TECNM LOGO">
+                <div class="title_card">Iniciar sesi&oacute;n</div>
+                {{ wtf.quick_form(login_form) }}
+            </div>
+        </div>
     </div>
 {% endblock %}

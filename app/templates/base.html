@@ -10,20 +10,26 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Sistema de integracion escolar</h1>
-    <h2>Hecho por alumnos del ITVH</h2>
-
-    <nav>
-        <ul>
-            <li><a href="/index">Inicio</a></li>
-            <li><a href="/teachers">Profesores</a></li>
-            <li><a href="nosotros.html"></a>nosotros</li>
-            {% if session.get('nickname') %}
-                <li><a href="/students">Estudiantes</a></li>
-                <li><a href="/classrooms">Clases</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+    <header class="header">
+        <nav class="nav">
+            <a href="http://villahermosa.tecnm.mx/" class="logo"><img src="https://w7.pngwing.com/pngs/1008/847/png-transparent-advertising-marketing-computer-monitors-industry-computer-photography-computer-logo.png" alt="logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-menu-item"><a href="/index" class="nav-link nav-menu-link">Inicio</a></li>
+                <li class="nav-menu-item"><a href="/teachers" class="nav-link nav-menu-link">Profesores</a></li>
+                <li class="nav-menu-item"><a href="nosotros.html" class="nav-link nav-menu-link">nosotros</a></li>
+                {% if session.get('nickname') %}
+                    <li class="nav-menu-item"><a href="/students" class="nav-link nav-menu-link">Estudiantes</a></li>
+                    <li class="nav-menu-item"><a href="/classrooms" class="nav-link nav-menu-link">Clases</a></li>
+                {% endif %}
+                {% if session.get('nickname') %}
+                    <li class="nav-menu-item"><a href="/logout" class="nav-link nav-menu-link">Salir</a></li>
+                {% else %}
+                    <li class="nav-menu-item"><a href="/login" class="nav-link nav-menu-link">Entrar</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
     {% block content %}
     {% endblock %}
 </body>
