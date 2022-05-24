@@ -10,7 +10,7 @@ body {
 }
 
 .header {
-    background-color: #0769e9;
+    background-color: #036a91;    ;
     height: 80px;
     position: fixed;
     width: 100%;
@@ -53,8 +53,29 @@ body {
 }
 
 .nav-menu-link:hover {
-    background-color: #034574;
+    background-color: #0791b8;
     transition: 0.5s;
+}
+
+table {
+    background-color: white;
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th td{
+    padding: 20px;
+}
+
+.thead{
+    background-color: #54badf;
+    border-bottom: solid 2px #0F362D;
+    color: white;
+}
+
+td{
+    border: solid 1px #54badf;
 }
 
 .container_card {
@@ -76,6 +97,7 @@ body {
     text-align: center;
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
 }
+
 .card_login img {
     margin-top: 10%;
     width: 200px;
@@ -88,8 +110,30 @@ body {
 .title_card {
     text-align: center;
     font-size: 40px;
-    margin-top: 10%;
+    margin-top: 4px;
     font-weight: 100;
+    margin-bottom: 4%;
+}
+
+#nickname{
+    width: 70%;
+    text-align: center;
+}
+
+#nickname:hover{
+    transition: 0.5s;
+} 
+
+#password{
+    margin-top: 8px;
+    width: 70%;
+    text-align: center;
+}
+#submit{
+    margin-top: 12px;
+    text-align: center;
+    width: 40%;
+    height: 40px;
 }
 
 /* 

@@ -4,9 +4,9 @@ from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
-    nickname = StringField('Nombre de usuario', validators={DataRequired()})
-    password = PasswordField('Password', validators={DataRequired()})
-    submit = SubmitField('Enviar')
+    nickname = StringField('',validators={DataRequired()}, render_kw={"placeholder": "Nombre de Usuario"})
+    password = PasswordField('', validators={DataRequired()}, render_kw={"placeholder": "Contraseña"})
+    submit = SubmitField('Entrar')
 
 class RegisterForm(FlaskForm):
     nickname = StringField('Nombre de usuario', validators=[DataRequired()])
