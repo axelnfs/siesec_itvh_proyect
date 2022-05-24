@@ -70,3 +70,34 @@ CREATE TABLE UsuarioAlumno(
 );
 
 INSERT INTO Usuarios(nickname, password, levelAdministration) VALUES('fran89',  '1234', 2);
+
+CREATE PROCEDURE ObtenerUsuarioProfesorConContraseña(
+    IN insertUsuario VARCHAR(40), IN insertPassword VARCHAR(40))
+    BEGIN
+    SELECT UsuarioProfesor.id, Profesores.nombre, Usuarios.nickname, Usuarios.password 
+    FROM ((UsuarioProfesor
+    INNER JOIN Profesores ON UsuarioProfesor.id = Profesores.id)
+    INNER JOIN Usuarios ON UsuarioProfesor.id = Usuarios.id) 
+    WHERE Usuarios.nickname = insertUsuario AND Usuarios.password = insertPassword;
+    END
+
+CREATE PROCEDURE RegistrarAlumno(
+IN insertNombre VARCHAR(100), insertEmail VARCHAR(100), insertFechaNaci DATE, insertGenero VARCHAR(40))
+BEGIN
+  INSERT INTO Alumnos (nombre, email, fechaNaci, genero, vigencia) 
+  VALUES (insertNombre, insertEmail, insertFechaNaci, insertGenero, 'True');
+END
+
+CREATE PROCEDURE ObtenerUsuarioConContraseña(
+  IN insertUsuario VARCHAR(40), IN insertPassword VARCHAR(40))
+  BEGIN
+  SELECT * FROM Usuarios
+  WHERE nickname = insertUsuario AND password = insertPassword;
+  END
+  
+ CREATE PROCEDURE ObtenerUsuarioProfesorConContraseña(
+  IN insertUsuario VARCHAR(40), IN insertPassword VARCHAR(40))
+  BEGIN
+  SELECT * FROM Usuarios
+  WHERE nickname = insertUsuario AND password = insertPassword;
+  END

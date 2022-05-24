@@ -5,9 +5,10 @@ from flask_wtf import FlaskForm
 #bootstrap
 from flask_bootstrap import Bootstrap
 #paquetes locales
-from app.forms import LoginForm
+from app.forms import CreateStudentForm, LoginForm
 from app.forms import RegisterForm
 from app.forms import CreateTheacherForm
+from app.forms import CreateStudentForm
 # from app.forms import SearchTeacherForm
 #mysql
 from bd import obtener_conexion 
@@ -171,6 +172,29 @@ def classrooms():
     else:
         return redirect('/index')
 
+@app.route('/students/new', methods=["GET", "POST"]) 
+def newStudentClassroom():
+    if session.get('nickname'):
+        createStudent_form = CreateStudentForm()
+        context = {
+            'createStudent_form': createStudent_form
+        }
+        if createStudent_form.validate_on_submit:
+            nombre = createStudent_form.nombre.data
+            email = createStudent_form.email.data
+            fechaNaci = createStudent_form.fechaNaci.data
+            genero = createStudent_form.genero.data
+            if 'submit' in request.form:
+                connection = obtener_conexion()
+                with connection.cursor() as cursor:
+                    sql = "CALL RegistrarAlumno('"+nombre+"', '"+email+"','"+fechaNaci+"', '"+genero+"');"
+                    cursor.execute(sql)
+                connection.close()
+                return redirect('/students')
+        return render_template('createStudent.html', **context)
+    else:
+        return redirect('/index')
+    
 @app.route('/students')
 def students():
     if session.get('nickname'):
@@ -183,6 +207,12 @@ def students():
         return render_template('students.html', students = students)
     else:
         return redirect('/index')
+
+@app.route('/students/downstudent', methods=["GET", "POST"])
+def downStudent():
+    if session.get('nickname'):
+        connection = obtener_conexion()
+        #crear porcedure
 
 @app.route('/logout')
 def logout():

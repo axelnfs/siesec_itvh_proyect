@@ -1,6 +1,7 @@
+import email
 from flask_wtf import FlaskForm
 from wtforms import Form
-from wtforms.fields import StringField, PasswordField, SubmitField
+from wtforms.fields import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -25,5 +26,10 @@ class SearchTeacherForm(FlaskForm):
     submit = SubmitField('Buscar')
 
 class CreateStudentForm(FlaskForm):
-    pass
+    nombre = StringField('nombre')
+    email = StringField('Email')
+    fechaNaci = StringField('Fecha Nacimiento')
+    genero = StringField('Genero')
+    submit = SubmitField('REGISTRAR')
+
 
