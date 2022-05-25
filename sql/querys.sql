@@ -101,3 +101,14 @@ CREATE PROCEDURE ObtenerUsuarioConContraseña(
   SELECT * FROM Usuarios
   WHERE nickname = insertUsuario AND password = insertPassword;
   END
+
+CREATE PROCEDURE darBajaAlumno(
+IN idAlumno INT)
+BEGIN
+UPDATE Alumnos SET vigencia = 'False'
+WHERE id = idAlumno;
+END
+
+CREAR PROCEDURE ALTA ALUMNO
+CREAR PROCEDURE CAMBIAR PROFESOR
+LO MISMO CON PROFESORES

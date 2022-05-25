@@ -1,4 +1,5 @@
 import email
+from tokenize import String
 from flask_wtf import FlaskForm
 from wtforms import Form
 from wtforms.fields import StringField, PasswordField, SubmitField, SelectField
@@ -31,5 +32,8 @@ class CreateStudentForm(FlaskForm):
     fechaNaci = StringField('Fecha Nacimiento')
     genero = StringField('Genero')
     submit = SubmitField('REGISTRAR')
+
+class downStudentForm(FlaskForm):
+    id = StringField('ID')
 
 

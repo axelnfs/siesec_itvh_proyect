@@ -1,5 +1,4 @@
 #flask
-from sqlite3 import connect
 from flask import Flask, make_response, render_template, make_response, session, redirect, request, flash, url_for
 from flask_wtf import FlaskForm
 #bootstrap
@@ -9,6 +8,7 @@ from app.forms import CreateStudentForm, LoginForm
 from app.forms import RegisterForm
 from app.forms import CreateTheacherForm
 from app.forms import CreateStudentForm
+# from app.forms import DownStudentForm
 # from app.forms import SearchTeacherForm
 #mysql
 from bd import obtener_conexion 
@@ -40,6 +40,14 @@ def createTeacher(nombre, fechaNaci, genero, vigencia):
     conexion.commit()
     conexion.close()
     redirect(url_for('teachers'))
+
+def downStudent(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        sql = "CALL darBajaAlumno(%s);"
+        cursor.execute(sql, (id))
+    conexion.commit()
+    conexion.close()
 
 @app.route('/') 
 def hello(): #revisar
@@ -189,6 +197,7 @@ def newStudentClassroom():
                 with connection.cursor() as cursor:
                     sql = "CALL RegistrarAlumno('"+nombre+"', '"+email+"','"+fechaNaci+"', '"+genero+"');"
                     cursor.execute(sql)
+                connection.commit()
                 connection.close()
                 return redirect('/students')
         return render_template('createStudent.html', **context)
@@ -212,7 +221,18 @@ def students():
 def downStudent():
     if session.get('nickname'):
         connection = obtener_conexion()
-        #crear porcedure
+        downStudent_form = DownStudentForm()
+        context = {
+            'downStudent_form': downStudent_form
+        }
+        if downStudent_form.validate_on_submit:
+            id = downStudent_form.id.data
+            if 'submit' in request.form:
+                downStudent(id)
+                return redirect('/students')
+        return render_template('downstudentform.html', **context)
+    else:
+        return redirect('/index')
 
 @app.route('/logout')
 def logout():
