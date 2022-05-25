@@ -109,6 +109,26 @@ UPDATE Alumnos SET vigencia = 'False'
 WHERE id = idAlumno;
 END
 
-CREAR PROCEDURE ALTA ALUMNO
+CREATE PROCEDURE darAltaAlumno(
+  IN idAlumno INT)
+  BEGIN 
+  UPDATE Alumnos SET vigencia = 'True'
+  WHERE id = idAlumno;
+  END
+
+CREATE PROCEDURE darBajaProfesor(
+  IN idProfesor INT)
+  BEGIN 
+  UPDATE Profesores SET vigencia = 'False'
+  WHERE id = idProfesor;
+  END
+
+CREATE PROCEDURE darAltaProfesor(
+  IN idProfesor INT)
+  BEGIN 
+  UPDATE Profesores SET vigencia = 'True'
+  WHERE id = idProfesor;
+  END
+
 CREAR PROCEDURE CAMBIAR PROFESOR
 LO MISMO CON PROFESORES

@@ -4,11 +4,12 @@ from flask_wtf import FlaskForm
 #bootstrap
 from flask_bootstrap import Bootstrap
 #paquetes locales
-from app.forms import CreateStudentForm, LoginForm
+from app.forms import CreateStudentForm, LoginForm, UpStudentForm
 from app.forms import RegisterForm
 from app.forms import CreateTheacherForm
 from app.forms import CreateStudentForm
-# from app.forms import DownStudentForm
+from app.forms import DownStudentForm
+from app.forms import UpStudentForm
 # from app.forms import SearchTeacherForm
 #mysql
 from bd import obtener_conexion 
@@ -44,7 +45,15 @@ def createTeacher(nombre, fechaNaci, genero, vigencia):
 def downStudent(id):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
-        sql = "CALL darBajaAlumno(%s);"
+        sql = "CALL darBajaAlumno("+id+");"
+        cursor.execute(sql)
+    conexion.commit()
+    conexion.close()
+
+def upStudent(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        sql = "CALL darAltaAlumno(%s);"
         cursor.execute(sql, (id))
     conexion.commit()
     conexion.close()
@@ -220,7 +229,6 @@ def students():
 @app.route('/students/downstudent', methods=["GET", "POST"])
 def downStudent():
     if session.get('nickname'):
-        connection = obtener_conexion()
         downStudent_form = DownStudentForm()
         context = {
             'downStudent_form': downStudent_form
@@ -228,11 +236,38 @@ def downStudent():
         if downStudent_form.validate_on_submit:
             id = downStudent_form.id.data
             if 'submit' in request.form:
-                downStudent(id)
+                conexion = obtener_conexion()
+                with conexion.cursor() as cursor:
+                    sql = "CALL darBajaAlumno("+id+");"
+                    cursor.execute(sql)
+                conexion.commit()
+                conexion.close()
                 return redirect('/students')
         return render_template('downstudentform.html', **context)
     else:
         return redirect('/index')
+
+@app.route('/students/upstudent', methods=["GET", "POST"])
+def upStudent():
+    if session.get('nickname'):
+        upStudent_form = UpStudentForm()
+        context = {
+            'upStudent_form':upStudent_form
+        }
+        if upStudent_form.validate_on_submit:
+            id = upStudent_form.id.data
+            if 'submit' in request.form:
+                conexion = obtener_conexion()
+                with conexion.cursor() as cursor:
+                    sql = "CALL darAltaAlumno("+id+");"
+                    cursor.execute(sql)
+                conexion.commit()
+                conexion.close()
+                return redirect('/students')
+        return render_template('upstudentform.html', **context)
+    else:
+        return redirect('/index')
+        
 
 @app.route('/logout')
 def logout():

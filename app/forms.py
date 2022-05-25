@@ -33,7 +33,12 @@ class CreateStudentForm(FlaskForm):
     genero = StringField('Genero')
     submit = SubmitField('REGISTRAR')
 
-class downStudentForm(FlaskForm):
+class DownStudentForm(FlaskForm):
     id = StringField('ID')
+    submit = SubmitField('DAR BAJA')
+
+class UpStudentForm(FlaskForm):
+    id = StringField('ID')
+    submit = SubmitField('DAR ALTA')
 
 
