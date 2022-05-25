@@ -10,6 +10,8 @@ from app.forms import CreateTheacherForm
 from app.forms import CreateStudentForm
 from app.forms import DownStudentForm
 from app.forms import UpStudentForm
+from app.forms import DownTeacherForm
+from app.forms import UpTeacherForm
 # from app.forms import SearchTeacherForm
 #mysql
 from bd import obtener_conexion 
@@ -268,9 +270,50 @@ def upStudent():
     else:
         return redirect('/index')
         
+@app.route('/teachers/upteacher', methods=["GET", "POST"])
+def upTeacher():
+    if session.get('nickname'):
+        upTeacher_form = UpTeacherForm()
+        context = {
+            'upTeacher_form':upTeacher_form
+        }
+        if upTeacher_form.validate_on_submit:
+            id = upTeacher_form.id.data
+            if 'submit' in request.form:
+                conexion = obtener_conexion()
+                with conexion.cursor() as cursor:
+                    sql = "CALL darAltaProfesor("+id+");"
+                    cursor.execute(sql)
+                conexion.commit()
+                conexion.close()
+                return redirect('/teachers')
+        return render_template('upteachersform.html', **context)
+    else:
+        return redirect('/index')
+
+@app.route('/teachers/downteacher', methods=["GET", "POST"])
+def downTeacher():
+    if session.get('nickname'):
+        downTeacher_form = DownTeacherForm()
+        context = {
+            'downTeacher_form':downTeacher_form
+        }
+        if downTeacher_form.validate_on_submit:
+            id = downTeacher_form.id.data
+            if 'submit' in request.form:
+                conexion = obtener_conexion()
+                with conexion.cursor() as cursor:
+                    sql = "CALL darBajaProfesor("+id+");"
+                    cursor.execute(sql)
+                conexion.commit()
+                conexion.close()
+                return redirect('/teachers')
+        return render_template('downteacherform.html', **context)
+    else:
+        return redirect('/index')
 
 @app.route('/logout')
 def logout():
     session.clear()
-    # generateRecovery()
+    generateRecovery()
     return render_template('index.html')

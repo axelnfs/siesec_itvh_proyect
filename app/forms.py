@@ -41,4 +41,13 @@ class UpStudentForm(FlaskForm):
     id = StringField('ID')
     submit = SubmitField('DAR ALTA')
 
+class DownTeacherForm(FlaskForm):
+    id = StringField('ID')
+    submit = SubmitField('DAR BAJA')
+
+class UpTeacherForm(FlaskForm):
+    id = StringField('ID')
+    submit = SubmitField('DAR ALTA')
+    
+
 
