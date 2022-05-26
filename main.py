@@ -1,10 +1,11 @@
 #flask
+from multiprocessing import context
 from flask import Flask, make_response, render_template, make_response, session, redirect, request, flash, url_for
 from flask_wtf import FlaskForm
 #bootstrap
 from flask_bootstrap import Bootstrap
 #paquetes locales
-from app.forms import CreateStudentForm, LoginForm, RegisterStudentClassForm, UpStudentForm
+from app.forms import CreateStudentForm, LoginForm, UpStudentForm
 from app.forms import RegisterForm
 from app.forms import CreateTheacherForm
 from app.forms import CreateStudentForm
@@ -12,6 +13,7 @@ from app.forms import DownStudentForm
 from app.forms import UpStudentForm
 from app.forms import DownTeacherForm
 from app.forms import UpTeacherForm
+from app.forms import RegisterStudentClassForm
 # from app.forms import SearchTeacherForm
 #mysql
 from bd import obtener_conexion 
@@ -166,7 +168,7 @@ def createTeachers():
     context = {
         'createTeacher_form': createTeacher_form,
     }
-    if session.get('nickname') == 'kylo' & 'admin':
+    if session.get('nickname'):
         if createTeacher_form.validate_on_submit:
             nombre = createTeacher_form.nombre.data
             fechaNaci = createTeacher_form.fechaNaci.data
@@ -192,10 +194,31 @@ def classrooms():
         return redirect('/index')
 
 #pendiente
-@app.route('/classroom/registerstudent', methods=["GET", "POST"])
+@app.route('/classrooms/registerstudent', methods=["GET", "POST"])
 def registerStudent():
     if session.get('nickname'):
         registerStudentClass_form = RegisterStudentClassForm()
+        context = {
+            'registerStudentClass_form': registerStudentClass_form
+        }
+        if registerStudentClass_form.validate_on_submit:
+            codigoAula = registerStudentClass_form.codigoAula.data
+            idAlumno = registerStudentClass_form.idAlumno.data
+            idMateria = registerStudentClass_form.idMateria.data
+            idGrupo = registerStudentClass_form.idGrupo.data
+            idProfesor = registerStudentClass_form.idProfesor.data
+            if 'submit' in request.form:
+                connection = obtener_conexion()
+                with connection.cursor() as cursor:
+                    sql = "CALL registroClaseAlumno('"+codigoAula+"', "+idAlumno+","+idMateria+", "+idGrupo+", "+idProfesor+");"
+                    cursor.execute(sql)
+                connection.commit()
+                connection.close()
+                return redirect('/classroom')
+        return render_template('registerstudentclassform.html', **context)
+    else:
+        return redirect('/index')
+
 
 @app.route('/students/new', methods=["GET", "POST"]) 
 def newStudentClassroom():

@@ -49,10 +49,11 @@ class UpTeacherForm(FlaskForm):
     id = StringField('ID')
     submit = SubmitField('DAR ALTA')
     
-class registerStudentClass(FlaskForm):
+class RegisterStudentClassForm(FlaskForm):
     codigoAula = StringField('Aula')
     idAlumno = StringField('id Alumno')
     idMateria = SelectField('Programming Language', choices=[('1', 'HISTORIA 1'), ('2', 'MATEMATICAS 1'), ('3', 'LITERATURA 1'), ('4','CIENCIAS 1'), ('5', 'FISICA 1')])
     idGrupo = SelectField('Grupo', choices=[('1','A')])
     idProfesor = StringField('id Profesor')
+    submit = SubmitField('REGISTRAR')
 

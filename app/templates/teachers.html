@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Profesores</h1>
 <table>
     <tr class="thead">
         <th>id</th>
@@ -21,8 +22,11 @@
 </table>
 
 {% if session.get('nickname') %}
-    <a href="/teachers/create">Crear nuevo</a>
-    <a href="/teachers/upteacher">Dar Alta Profesor Existente</a>
-    <a href="/teachers/downteacher">Dar Baja Profesores</a>
+<div class="submenu">
+  <a href="/teachers/create">Crear nuevo</a>
+  <a href="/teachers/upteacher">Dar Alta Profesor Existente</a>
+  <a href="/teachers/downteacher">Dar Baja Profesores</a>
+</div>
+    
 {% endif %}
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Alumnos y clases</h1>
 <table>
     <tr class="thead">
         <th>ALUMNOS</th>
@@ -21,5 +22,7 @@
       </tr>
     {% endfor %}
 </table>
-<a href="/index">Volver</a>
+<div class="submenu">
+  <a href="/classrooms/registerstudent">Crear nuevo</a>
+</div>
 {% endblock %}

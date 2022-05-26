@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Estudiantes</h1>
+<br>
 <table>
     <tr>
         <td>id</td>
@@ -21,7 +23,9 @@
       </tr>
     {% endfor %}
 </table>
-<a href="/students/new">Crear nuevo</a>
-<a href="/students/upstudent">Dar Alta Alumno Existente</a>
-<a href="/students/downstudent">Dar Baja Alumno</a>
+<div class="submenu">
+  <a href="/students/new">Crear nuevo</a>
+  <a href="/students/upstudent">Dar Alta Alumno Existente</a>
+  <a href="/students/downstudent">Dar Baja Alumno</a>
+</div>
 {% endblock %}
