@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 #bootstrap
 from flask_bootstrap import Bootstrap
 #paquetes locales
-from app.forms import CreateStudentForm, LoginForm, UpStudentForm
+from app.forms import CreateStudentForm, LoginForm, RegisterStudentClassForm, UpStudentForm
 from app.forms import RegisterForm
 from app.forms import CreateTheacherForm
 from app.forms import CreateStudentForm
@@ -190,6 +190,12 @@ def classrooms():
         return render_template('classrooms.html', classrooms = classrooms)
     else:
         return redirect('/index')
+
+#pendiente
+@app.route('/classroom/registerstudent', methods=["GET", "POST"])
+def registerStudent():
+    if session.get('nickname'):
+        registerStudentClass_form = RegisterStudentClassForm()
 
 @app.route('/students/new', methods=["GET", "POST"]) 
 def newStudentClassroom():

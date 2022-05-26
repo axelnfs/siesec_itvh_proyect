@@ -132,3 +132,11 @@ CREATE PROCEDURE darAltaProfesor(
 
 CREAR PROCEDURE CAMBIAR PROFESOR
 LO MISMO CON PROFESORES
+
+CREATE PROCEDURE registroClaseAlumno(
+  IN insertCodigoAula VARCHAR(4), insertIdAlumno INT, insertIdMateria INT, insertIdGrupo int, insertIdProfesor INT)
+  BEGIN
+  INSERT INTO Clases 
+  (codigoAula, idAlumno, idMateria, idGrupo, idProfesor, cicloEscolar) 
+  VALUES (insertCodigoAula, insertIdAlumno, insertIdMateria, insertIdGrupo, insertIdProfesor, '2021-A');
+  END
