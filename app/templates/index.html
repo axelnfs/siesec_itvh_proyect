@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {%block content %}
-<h1>Sistema de integracion escolar</h1>
-<h2>Hecho por alumnos del ITVH</h2>
+<h1 class="tittle_inicio">Sistema de integracion escolar</h1>
+<h2 class="subtitle_inicio">Hecho por alumnos del ITVH</h2>
     <div class="buttonUser">
     {% if session.get('nickname') %}
         <div>
@@ -17,6 +17,15 @@
             <a href="/login">Iniciar sesion</a>
         </div>
     {% endif %}
+    </div>
+    <div class="text_example">
+        <h1>Conoce nuestra pagina principal</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse accumsan, nisl eu sodales blandit, magna neque eleifend ante, in fermentum erat neque quis orci. Curabitur placerat gravida condimentum. Aliquam imperdiet erat eget tortor faucibus, non maximus purus volutpat. Phasellus sodales est in rutrum gravida. Mauris posuere elit at aliquam iaculis. Quisque luctus lectus magna, vel tempus diam posuere sit amet. Pellentesque rhoncus mattis dapibus. Fusce aliquet diam sit amet odio interdum vulputate. Vivamus eu libero nulla. In eget egestas tortor.
+
+
+        </p>
+        <img src="https://www.elheraldodetabasco.com.mx/local/gfd42g-tec2.jpg/ALTERNATES/LANDSCAPE_1140/tec2.jpg" alt="tecnologico nacional de mexico, campus villahermosa">
     </div>
 
 {% endblock %}

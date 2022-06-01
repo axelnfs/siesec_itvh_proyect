@@ -1,6 +1,7 @@
 *  {
     margin: 0%;
     padding: 0%;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -55,6 +56,22 @@ body {
 .nav-menu-link:hover {
     background-color: #0791b8;
     transition: 0.5s;
+}
+
+.tittle_inicio {
+    background: #ff8400;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.subtitle_inicio {
+    margin-right: 20px;
+    margin-left: 20px;
+    padding-top: 20px;
 }
 
 table {
@@ -148,6 +165,21 @@ td{
     height: 40px;
 }
 
+.text_example{
+    margin-top: 20px;
+    margin-bottom: 4px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.text_example p{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.text_example img{
+    width: 336px;
+}
 /* 
 
 .container nav ul li {
